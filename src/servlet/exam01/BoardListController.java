@@ -1,9 +1,9 @@
 package servlet.exam01;
 
-import java.util.List;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -14,34 +14,30 @@ import javax.servlet.http.HttpServletResponse;
 
 import dto.Board;
 
-
-@WebServlet(name="exam01.BoardListcontroller", urlPatterns="/exam01/BoardListController")
+@WebServlet(name="exam01.BoardListController", urlPatterns="/exam01/BoardListController")
 public class BoardListController extends HttpServlet {
-	
-	
-	
 
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("service() 실행");
-		//데이터 결과 생성
 		//처리 결과 생성
 		List<Board> boards = new ArrayList<>();
 		
-		for(int i=1; i<=5; i++){
+		for(int i = 1; i <= 5; i++) {
 			Board board = new Board();
 			board.setBno(i);
-			board.setBtitle("제목"+i);
-			board.setBcontent("내용"+i);
+			board.setBtitle("제목: " + i);
+			board.setBcontent("내용: " + i);
 			board.setBwriter("홍길동");
 			board.setBdate(new Date());
 			boards.add(board);
 		}
-	
-		request.setAttribute("list", boards);
-		//jsp로 이동 + 스프링을 배우면 빠지는 코드2
+		
+		//처리 결과를 JSP에서 사용할 수 있도록 설정
+		request.setAttribute("boards", boards);
+		
+		//JSP로 이동
 		request.getRequestDispatcher("/WEB-INF/views/exam01/boardList.jsp").forward(request, response);
 	}
-
-
+	
 }
